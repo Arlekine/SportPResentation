@@ -7,7 +7,7 @@ namespace Animation.ColumnInfographics
 {
     public class ColumnInfographicsAnimationSystem : MonoBehaviour
     {
-        [SerializeField] private List<ColumnAnimationObject> _columnAnimationObjects = new();
+        [SerializeField] private List<ColumnAnimationObject> _columnAnimationObjects;
         [SerializeField] private float _pauseBetweenColumnsAnimation = 0.2f;
 
         private Sequence _sequence;
@@ -16,24 +16,16 @@ namespace Animation.ColumnInfographics
         public void Show()
         {
             _sequence?.Kill();
+
             _sequence = DOTween.Sequence();
+            var start = 0f;
 
-            if (_columnAnimationObjects == null || _columnAnimationObjects.Count == 0)
-                return;
-
-            var delay = 0f;
-            foreach (var columnAnimationObject in _columnAnimationObjects)
+            foreach (var animationObject in _columnAnimationObjects)
             {
-                if (columnAnimationObject == null) 
-                    continue;
+                var tween = animationObject.Show();
 
-                var tween = columnAnimationObject.Show();
-                if (tween == null) 
-                    continue;
-
-                tween.SetDelay(delay);
-                _sequence.Join(tween);
-                delay += _pauseBetweenColumnsAnimation;
+                _sequence.Insert(start, tween);
+                start += _pauseBetweenColumnsAnimation;
             }
 
             _sequence.Play();
@@ -43,23 +35,17 @@ namespace Animation.ColumnInfographics
         public void Hide()
         {
             _sequence?.Kill();
+
             _sequence = DOTween.Sequence();
+            var start = 0f;
 
-            if (_columnAnimationObjects == null || _columnAnimationObjects.Count == 0)
-                return;
-
-            var delay = 0f;
             for (var i = _columnAnimationObjects.Count - 1; i >= 0; i--)
             {
                 var columnAnimationObject = _columnAnimationObjects[i];
-                if (columnAnimationObject == null) continue;
-
                 var tween = columnAnimationObject.Hide();
-                if (tween == null) continue;
 
-                tween.SetDelay(delay);
-                _sequence.Join(tween);
-                delay += _pauseBetweenColumnsAnimation;
+                _sequence.Insert(start, tween);
+                start += _pauseBetweenColumnsAnimation;
             }
 
             _sequence.Play();

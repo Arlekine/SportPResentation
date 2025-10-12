@@ -10,7 +10,6 @@ namespace Animation.ColumnInfographics
         [SerializeField] private float _yFinalPosition;
         
         private float _yStartPosition;
-        private Sequence _sequence;
         
         private void Awake()
         {
@@ -18,14 +17,9 @@ namespace Animation.ColumnInfographics
         }
         
         public Tween Show() =>
-            _sequence.Append(_columnTransform.DOAnchorPosY(_yFinalPosition, _animationTime));
+            _columnTransform.DOAnchorPosY(_yFinalPosition, _animationTime);
         
         public Tween Hide() =>
-            _sequence.Append(_columnTransform.DOAnchorPosY(_yStartPosition, _animationTime));
-
-        private void OnDestroy()
-        {
-            _sequence?.Kill();
-        }
+            _columnTransform.DOAnchorPosY(_yStartPosition, _animationTime);
     }
 }
