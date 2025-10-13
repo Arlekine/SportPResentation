@@ -9,6 +9,7 @@ namespace Animation.ColumnInfographics
         [SerializeField] private RectTransform _columnTransform;
         [SerializeField] private float _animationTime;
         [SerializeField] private float _yFinalSize;
+        [SerializeField] private Ease _ease = Ease.OutQuad;
         
         private float _yStartSize;
         
@@ -18,10 +19,10 @@ namespace Animation.ColumnInfographics
         }
 
         public Tween Show() =>
-            _columnTransform.DOSizeDelta(new Vector2(_columnTransform.sizeDelta.x, _yFinalSize), _animationTime);
+            _columnTransform.DOSizeDelta(new Vector2(_columnTransform.sizeDelta.x, _yFinalSize), _animationTime).SetEase(_ease);
         
         public Tween Hide() =>
-            _columnTransform.DOSizeDelta(new Vector2(_columnTransform.sizeDelta.x, _yStartSize), _animationTime);
+            _columnTransform.DOSizeDelta(new Vector2(_columnTransform.sizeDelta.x, _yStartSize), _animationTime).SetEase(_ease);
 
         public Tween ShowInstantly() =>
             _columnTransform.DOSizeDelta(new Vector2(_columnTransform.sizeDelta.x, _yFinalSize), 0f);
