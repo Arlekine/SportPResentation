@@ -20,6 +20,9 @@ namespace SportPresentation.App
 
             yield return null;
 
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 120;
+
             _networkConnector.Init(networkState, networkDiscovery);
             _networkConnector.Connect();
 
