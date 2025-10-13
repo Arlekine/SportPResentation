@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public sealed class NumberRollAnimator : MonoBehaviour
+public sealed class NumberRollAnimator : UIShowingAnimation
 {
     [SerializeField] private TMP_Text _label;
     
@@ -15,6 +15,10 @@ public sealed class NumberRollAnimator : MonoBehaviour
     [SerializeField] private bool _useUnscaledTime = false;
     [SerializeField] private bool _playOnEnable = false;
     [SerializeField] private string _format = "0";
+    
+    [Space, Header("Canvas group settings")]
+    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private float _fadeDuration = 0.3f;
 
     private Tween _tween;
     private int _current;
@@ -32,13 +36,29 @@ public sealed class NumberRollAnimator : MonoBehaviour
         _tween?.Kill();
     }
 
+    public override bool IsShowed { get; }
+
     [ProButton]
-    public Tween Show() =>
+    public override Tween Show() =>
         Show(_from, _to, _duration);
+
+    [ProButton]
+    public override Tween Hide() =>
+        _canvasGroup.DOFade(0f, _fadeDuration);
+
+    public override void ShowInstantly() =>
+        Show(_from, _to, 0f);
+
+    public override void HideInstantly()=>
+        _canvasGroup.DOFade(0f, _fadeDuration);
 
     public Tween Show(int from, int to, float duration)
     {
         _tween?.Kill();
+
+        if (_canvasGroup.alpha == 0f)
+            _canvasGroup.DOFade(1f, 0f);
+        
         _current = from;
         UpdateLabel(_current);
 
@@ -51,13 +71,11 @@ public sealed class NumberRollAnimator : MonoBehaviour
 
         _tween = DOVirtual.Int(from, to, duration, v =>
         {
-            if (v == _current) return;
+            if (v == _current) 
+                return;
             _current = v;
             UpdateLabel(v);
-        })
-        .SetEase(_ease)
-        .SetUpdate(_useUnscaledTime)
-        .OnComplete(() =>
+        }).SetEase(_ease).SetUpdate(_useUnscaledTime).OnComplete(() =>
         {
             _current = to;
             UpdateLabel(to);
@@ -68,7 +86,9 @@ public sealed class NumberRollAnimator : MonoBehaviour
 
     public void Stop(bool complete = false)
     {
-        if (complete) _tween?.Complete();
+        if (complete) 
+            _tween?.Complete();
+        
         _tween?.Kill();
     }
 
