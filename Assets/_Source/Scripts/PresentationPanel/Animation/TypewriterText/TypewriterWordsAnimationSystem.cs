@@ -1,14 +1,14 @@
-using System;
 using System.Collections.Generic;
+using com.cyborgAssets.inspectorButtonPro;
 using DG.Tweening;
 using UnityEngine;
-using com.cyborgAssets.inspectorButtonPro;
 
 namespace Animation.TypewriterText
 {
-    public sealed class TypewriterTextAnimationSystem : UIShowingAnimation
+    public sealed class TypewriterWordsAnimationSystem : UIShowingAnimation
     {
-        [SerializeField] private List<TypewriterTextAnimationObject> _typewriterTextAnimationObjects;
+        [SerializeField] private List<TypewriterWordsAnimationObject> _typewriterWordsAnimationObjects;
+        
         [SerializeField] private bool _useUnscaledTime = false;
         [SerializeField] private bool _hideOnAwake = true;
 
@@ -26,20 +26,22 @@ namespace Animation.TypewriterText
         public override Tween Show()
         {
             _systemTween?.Kill();
-            if (_typewriterTextAnimationObjects == null || _typewriterTextAnimationObjects.Count == 0) 
+            
+            if (_typewriterWordsAnimationObjects == null || _typewriterWordsAnimationObjects.Count == 0)
                 return DOVirtual.DelayedCall(0f, () => { }).SetUpdate(_useUnscaledTime);
-
-            foreach (var animationObject in _typewriterTextAnimationObjects)
+            
+            foreach (var animationObject in _typewriterWordsAnimationObjects)
                 animationObject.ShowInstantly();
 
             var sequence = DOTween.Sequence().SetUpdate(_useUnscaledTime);
-            foreach (var obj in _typewriterTextAnimationObjects)
+            foreach (var obj in _typewriterWordsAnimationObjects)
             {
-                if (obj == null) 
-                    continue;
+                if (obj == null) continue;
                 sequence.Append(obj.Show());
             }
+            
             _systemTween = sequence;
+            
             return _systemTween;
         }
 
@@ -49,7 +51,7 @@ namespace Animation.TypewriterText
             _systemTween?.Kill();
             var sequence = DOTween.Sequence().SetUpdate(_useUnscaledTime);
             
-            foreach (var textAnimationObject in _typewriterTextAnimationObjects)
+            foreach (var textAnimationObject in _typewriterWordsAnimationObjects)
                 sequence.Join(textAnimationObject.Hide());
             
             _systemTween = sequence;
@@ -59,16 +61,16 @@ namespace Animation.TypewriterText
         [ProButton]
         public override void ShowInstantly()
         {
-            foreach (var obj in _typewriterTextAnimationObjects)
+            foreach (var obj in _typewriterWordsAnimationObjects)
                 obj.ShowInstantly();
         }
 
         public override void HideInstantly()
         {
-            foreach (var obj in _typewriterTextAnimationObjects)
+            foreach (var obj in _typewriterWordsAnimationObjects)
                 obj.HideInstantly();
         }
-        
+
         private void OnDisable()
         {
             _systemTween?.Kill();

@@ -5,15 +5,17 @@ using UnityEngine;
 
 namespace Animation.ColumnInfographics
 {
-    public class ColumnInfographicsAnimationSystem : MonoBehaviour
+    public class ColumnInfographicsAnimationSystem : UIShowingAnimation
     {
         [SerializeField] private List<ColumnAnimationObject> _columnAnimationObjects;
         [SerializeField] private float _pauseBetweenColumnsAnimation = 0.2f;
 
         private Sequence _sequence;
 
+        public override bool IsShowed { get; }
+
         [ProButton]
-        public void Show()
+        public override Tween Show()
         {
             _sequence?.Kill();
 
@@ -28,11 +30,11 @@ namespace Animation.ColumnInfographics
                 start += _pauseBetweenColumnsAnimation;
             }
 
-            _sequence.Play();
+            return _sequence.Play();
         }
 
         [ProButton]
-        public void Hide()
+        public override Tween Hide()
         {
             _sequence?.Kill();
 
@@ -48,7 +50,21 @@ namespace Animation.ColumnInfographics
                 start += _pauseBetweenColumnsAnimation;
             }
 
-            _sequence.Play();
+            return _sequence.Play();
+        }
+
+        [ProButton]
+        public override void ShowInstantly()
+        {
+            foreach (var animationObject in _columnAnimationObjects)
+                animationObject.ShowInstantly();
+        }
+
+        [ProButton]
+        public override void HideInstantly()
+        {
+            foreach (var animationObject in _columnAnimationObjects)
+                animationObject.HideInstantly();
         }
 
         private void OnDestroy()
