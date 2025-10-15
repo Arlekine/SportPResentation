@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: IDString::IDsList
   _name: Regions
   _ids:
-  - Moskva
+  - Krasnodar
   - Leningrad
-  - Chuvashia
-  - Mari-El
-  - Volgogradskay
-  - Tatarstan
-  - Mordovia
-  - Murmansk
+  - Moskva
+  - Sverdlovsk
+  - Primorskiy
+  - Bashkartostan
+  - Tula

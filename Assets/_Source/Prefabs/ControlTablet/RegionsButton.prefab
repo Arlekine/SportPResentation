@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 4885118858605771176}
   - component: {fileID: 8530424220663039175}
   m_Layer: 5
-  m_Name: RegionsButton
+  m_Name: Region_Button_Moskva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,5 +336,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegionButton
   _button: {fileID: 5958100432107237059}
-  _selectionAnimation: {fileID: 4885118858605771176}
   _regionID: Moskva
