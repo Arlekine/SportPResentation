@@ -8,12 +8,12 @@ public class IdButtonsGroup : MonoBehaviour
 
     public event Action<string> Clicked;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _buttons.ForEach(x => x.Clicked += OnClick);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _buttons.ForEach(x => x.Clicked -= OnClick);
     }
