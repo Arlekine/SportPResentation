@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3093ef2a8074fd794bd486309fa7e64, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.Data.MediaSequenceSO
+  _title: 1
+  _photos:
+  - {fileID: 2800000, guid: 73e8058ba28ab99428e871834a8b0f5d, type: 3}
+  - {fileID: 2800000, guid: 4065dc27f41e98c40bce2f76d6a16fc9, type: 3}
+  - {fileID: 2800000, guid: 5f1fa7ed5bdbfe44499b61ed1ebb45ec, type: 3}
+  - {fileID: 2800000, guid: 89a3b45f2bf1e7541af568e51f783d06, type: 3}
+  - {fileID: 2800000, guid: 1b86f0c409e5dcf40b1ddb41bc4eca21, type: 3}
+  - {fileID: 2800000, guid: 3d7948c7589e1d14fa1be55e96ad0243, type: 3}
+  - {fileID: 2800000, guid: c38459a2ecccc8d45bc6019c68411b77, type: 3}
+  _videos:
+  - {fileID: 32900000, guid: 90281b894ccc74f02947bae074bdccc1, type: 3}
+  - {fileID: 32900000, guid: bc2e598c94f714fb48f561220008c75b, type: 3}
+  _photoDurationSeconds: 10
+  _videoDurationSeconds: 20
+  _fadeDurationSeconds: 0.5

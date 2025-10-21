@@ -1,0 +1,115 @@
+using System;
+using System.Threading;
+using com.cyborgAssets.inspectorButtonPro;
+using Cysharp.Threading.Tasks;
+using PhotoLoop.Data;
+using PhotoLoop.View;
+using UnityEngine;
+
+namespace PhotoLoop.App
+{
+    public sealed class MediaController : MonoBehaviour
+    {
+        [SerializeField] private MediaSequenceCollectionSO _collection;
+        [SerializeField] private TripleMediaView _view;
+        [SerializeField] private bool _useUnscaledTime;
+
+        private MediaMediator _mediator;
+        private CancellationTokenSource _cts;
+
+        private void OnEnable()
+        {
+            _mediator = new MediaMediator(_collection, _view);
+            
+            PrivateStartLoop();
+        }
+
+        private void OnDisable()
+        {
+            PrivateStopLoop();
+        }
+
+        [ProButton]
+        public void ForceSwitchSequence(int index)
+        {
+            _mediator.SwitchFolder(index);
+            PrivateRestartLoop();
+        }
+
+        private void PrivateRestartLoop()
+        {
+            PrivateStopLoop();
+            PrivateStartLoop();
+        }
+
+        private void PrivateStartLoop()
+        {
+            _cts = new CancellationTokenSource();
+            PrivateRunLoopAsync(_cts.Token).Forget();
+        }
+
+        private void PrivateStopLoop()
+        {
+            if (_cts == null) 
+                return;
+            
+            _cts.Cancel();
+            _cts.Dispose();
+            
+            _cts = null;
+        }
+
+        private async UniTaskVoid PrivateRunLoopAsync(CancellationToken token)
+        {
+            var now = _useUnscaledTime ? Time.unscaledTime : Time.time;
+            var photoWait = Mathf.Max(0f, _mediator.GetPhotoDuration());
+            var videoWait = Mathf.Max(0f, _mediator.GetVideoDuration());
+            var nextPhotoAt = _mediator.HasPhotos() ? now + photoWait : float.PositiveInfinity;
+            var nextVideoAt = _mediator.HasVideos() ? now + videoWait : float.PositiveInfinity;
+
+            while (!token.IsCancellationRequested)
+            {
+                now = _useUnscaledTime ? Time.unscaledTime : Time.time;
+                var duePhoto = _mediator.HasPhotos() && now >= nextPhotoAt;
+                var dueVideo = _mediator.HasVideos() && now >= nextVideoAt;
+
+                if (duePhoto && dueVideo)
+                {
+                    _mediator.SwitchNextPhoto();
+                    photoWait = Mathf.Max(0f, _mediator.GetPhotoDuration());
+                    
+                    var stagger = Mathf.Max(0.001f, _mediator.GetFadeDuration());
+                    nextPhotoAt = (_useUnscaledTime ? Time.unscaledTime : Time.time) + photoWait;
+                    
+                    await UniTask.Delay(TimeSpan.FromSeconds(stagger), _useUnscaledTime, PlayerLoopTiming.Update, token);
+                    _mediator.SwitchNextVideo();
+                    
+                    videoWait = Mathf.Max(0f, _mediator.GetVideoDuration());
+                    nextVideoAt = (_useUnscaledTime ? Time.unscaledTime : Time.time) + videoWait;
+                }
+                else if (duePhoto)
+                {
+                    _mediator.SwitchNextPhoto();
+                    photoWait = Mathf.Max(0f, _mediator.GetPhotoDuration());
+                    nextPhotoAt = (_useUnscaledTime ? Time.unscaledTime : Time.time) + photoWait;
+                }
+                else if (dueVideo)
+                {
+                    _mediator.SwitchNextVideo();
+                    videoWait = Mathf.Max(0f, _mediator.GetVideoDuration());
+                    nextVideoAt = (_useUnscaledTime ? Time.unscaledTime : Time.time) + videoWait;
+                }
+                else
+                {
+                    var nextDue = Mathf.Min(nextPhotoAt, nextVideoAt) - now;
+                    if (float.IsInfinity(nextDue) || nextDue < 0f) 
+                        nextDue = 0.05f;
+                    
+                    var cap = Mathf.Clamp(nextDue, 0.01f, 0.25f);
+                    
+                    await UniTask.Delay(TimeSpan.FromSeconds(cap), _useUnscaledTime, PlayerLoopTiming.Update, token);
+                }
+            }
+        }
+    }
+}
