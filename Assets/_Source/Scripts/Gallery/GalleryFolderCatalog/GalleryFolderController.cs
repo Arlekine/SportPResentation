@@ -1,25 +1,26 @@
 using System;
 using System.Collections.Generic;
 using com.cyborgAssets.inspectorButtonPro;
-using DG.Tweening;
 using Gallery.Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gallery.GalleryFolderCatalog
 {
-    public class GalleryFolderSelection : MonoBehaviour
+    public class GalleryFolderController : MonoBehaviour
     {
+        [SerializeField] private Button _backButton;
         [SerializeField] private RectTransform _content;
         [SerializeField] private FolderButton _buttonPrefab;
-        
-        [Space]
-        [SerializeField] private CanvasGroup _panelCanvasGroup;
-        [SerializeField] private float _fadeDuration = 0.2f;
+
+        [Space] 
+        [SerializeField] private UIShowingAnimation _animation;
         
         private MediaSequenceCollectionSO _collection;
         private List<FolderButton> _buttons = new List<FolderButton>();
         
         public event Action<int> Selected;
+        public event Action Back;
 
         [ProButton]
         public void Init(MediaSequenceCollectionSO collection)
@@ -37,16 +38,13 @@ namespace Gallery.GalleryFolderCatalog
 
         public void Deactivate()
         {
-            _panelCanvasGroup.DOFade(0f, _fadeDuration);
-            _panelCanvasGroup.interactable = false;
-            _panelCanvasGroup.blocksRaycasts = false;
+            _animation.Hide();
         }
 
+        [ProButton]
         public void Activate()
         {
-            _panelCanvasGroup.DOFade(1f, _fadeDuration);
-            _panelCanvasGroup.interactable = true;
-            _panelCanvasGroup.blocksRaycasts = true;
+            _animation.Show();
         }
 
         private void OnSelected(int obj)
@@ -54,10 +52,23 @@ namespace Gallery.GalleryFolderCatalog
             Selected?.Invoke(obj);
         }
 
+        private void OnBack()
+        {
+            Deactivate();
+            Back?.Invoke();
+        }
+
+        private void OnEnable()
+        {
+            _backButton.onClick.AddListener(OnBack);
+        }
+        
         private void OnDisable()
         {
             foreach (var folderButton in _buttons)
                 folderButton.Selected -= OnSelected;
+            
+            _backButton.onClick.RemoveListener(OnBack);
         }
     }
 }

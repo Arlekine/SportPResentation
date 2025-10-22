@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.Data.MediaSequenceSO
   _title: 1
+  _titlePhoto: {fileID: -169923268475793528, guid: 24f3f4e079e9449648574d945e1d4eb5, type: 3}
   _photos:
   - {fileID: 2800000, guid: 73e8058ba28ab99428e871834a8b0f5d, type: 3}
   - {fileID: 2800000, guid: 4065dc27f41e98c40bce2f76d6a16fc9, type: 3}

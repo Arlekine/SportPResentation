@@ -31,7 +31,6 @@ namespace Gallery.PhotoLoop.View
 
         [Space, Header("Animation")]
         [SerializeField] private float _fadeDurationSeconds = 0.5f;
-
         [SerializeField] private bool _middleVideoOnly;
 
         private bool _topFrontActive = true;
@@ -41,10 +40,8 @@ namespace Gallery.PhotoLoop.View
         public void SwitchNextPhoto()
         {
             PrivateCrossfadeTop();
-            
-            if (!_middleVideoOnly) 
+            if (!_middleVideoOnly)
                 PrivateCrossfadeMiddle();
-            
             PrivateCrossfadeBottom();
         }
 
@@ -53,11 +50,86 @@ namespace Gallery.PhotoLoop.View
             PrivateCrossfadeMiddle();
         }
 
+        public void SwitchNextMiddleOnly()
+        {
+            PrivateCrossfadeMiddle();
+        }
+
+        public void HideTopAndBottom()
+        {
+            DOTween.Kill(_topFrontGroup);
+            DOTween.Kill(_topBackGroup);
+            DOTween.Kill(_bottomFrontGroup);
+            DOTween.Kill(_bottomBackGroup);
+
+            _topFrontGroup.DOFade(0f, _fadeDurationSeconds);
+            _topBackGroup.DOFade(0f, _fadeDurationSeconds);
+            _bottomFrontGroup.DOFade(0f, _fadeDurationSeconds);
+            _bottomBackGroup.DOFade(0f, _fadeDurationSeconds);
+
+            _topFrontGroup.blocksRaycasts = false;
+            _topBackGroup.blocksRaycasts = false;
+            _bottomFrontGroup.blocksRaycasts = false;
+            _bottomBackGroup.blocksRaycasts = false;
+
+            _topFrontGroup.interactable = false;
+            _topBackGroup.interactable = false;
+            _bottomFrontGroup.interactable = false;
+            _bottomBackGroup.interactable = false;
+        }
+
+        public void ShowTopAndBottom()
+        {
+            DOTween.Kill(_topFrontGroup);
+            DOTween.Kill(_topBackGroup);
+            DOTween.Kill(_bottomFrontGroup);
+            DOTween.Kill(_bottomBackGroup);
+
+            var topFront = _topFrontActive ? _topFrontGroup : _topBackGroup;
+            var botFront = _bottomFrontActive ? _bottomFrontGroup : _bottomBackGroup;
+
+            topFront.alpha = 0f;
+            botFront.alpha = 0f;
+
+            topFront.DOFade(1f, _fadeDurationSeconds);
+            botFront.DOFade(1f, _fadeDurationSeconds);
+
+            topFront.blocksRaycasts = true;
+            botFront.blocksRaycasts = true;
+            topFront.interactable = true;
+            botFront.interactable = true;
+        }
+
+        public void ClearMiddleVideos()
+        {
+            if (_middleFrontVideo != null)
+            {
+                if (_middleFrontVideo.isPlaying) _middleFrontVideo.Stop();
+                _middleFrontVideo.clip = null;
+                _middleFrontVideo.targetTexture = null;
+            }
+
+            if (_middleBackVideo != null)
+            {
+                if (_middleBackVideo.isPlaying) _middleBackVideo.Stop();
+                _middleBackVideo.clip = null;
+                _middleBackVideo.targetTexture = null;
+            }
+        }
+
+        public void ForceMiddlePhoto(Texture2D tex)
+        {
+            if (tex == null) return;
+            ClearMiddleVideos();
+            PrivateSetMiddleBackPhoto(tex);
+            PrivateCrossfadeMiddle();
+        }
+
         internal void PreparePhotos(Texture2D topTexture, Texture2D middleTexture, Texture2D bottomTexture)
         {
-            if (topTexture != null) 
+            if (topTexture != null)
                 PrivateSetTopBackTexture(topTexture);
-            
+
             if (!_middleVideoOnly && middleTexture != null)
             {
                 PrivateStopMiddleBackVideo();
@@ -87,14 +159,11 @@ namespace Gallery.PhotoLoop.View
         {
             var front = _topFrontActive ? _topFrontGroup : _topBackGroup;
             var back = _topFrontActive ? _topBackGroup : _topFrontGroup;
-            
             DOTween.Kill(front);
             DOTween.Kill(back);
-            
             back.alpha = 1f;
             front.DOFade(0f, _fadeDurationSeconds);
             _topFrontActive = !_topFrontActive;
-            
             PrivateSwapInteractable(front, back);
         }
 
@@ -102,10 +171,8 @@ namespace Gallery.PhotoLoop.View
         {
             var frontG = _middleFrontActive ? _middleFrontGroup : _middleBackGroup;
             var backG = _middleFrontActive ? _middleBackGroup : _middleFrontGroup;
-            
             DOTween.Kill(frontG);
             DOTween.Kill(backG);
-            
             backG.alpha = 1f;
             frontG.DOFade(0f, _fadeDurationSeconds);
 
@@ -128,14 +195,11 @@ namespace Gallery.PhotoLoop.View
         {
             var front = _bottomFrontActive ? _bottomFrontGroup : _bottomBackGroup;
             var back = _bottomFrontActive ? _bottomBackGroup : _bottomFrontGroup;
-            
             DOTween.Kill(front);
             DOTween.Kill(back);
-            
             back.alpha = 1f;
             front.DOFade(0f, _fadeDurationSeconds);
             _bottomFrontActive = !_bottomFrontActive;
-            
             PrivateSwapInteractable(front, back);
         }
 
@@ -143,25 +207,20 @@ namespace Gallery.PhotoLoop.View
         {
             front.blocksRaycasts = false;
             back.blocksRaycasts = true;
-            
             front.interactable = false;
             back.interactable = true;
         }
 
         private void PrivateSetTopBackTexture(Texture2D tex)
         {
-            if (_topFrontActive) 
-                _topBackImage.texture = tex;
-            else 
-                _topFrontImage.texture = tex;
+            if (_topFrontActive) _topBackImage.texture = tex;
+            else _topFrontImage.texture = tex;
         }
 
         private void PrivateSetBottomBackTexture(Texture2D tex)
         {
-            if (_bottomFrontActive) 
-                _bottomBackImage.texture = tex;
-            else 
-                _bottomFrontImage.texture = tex;
+            if (_bottomFrontActive) _bottomBackImage.texture = tex;
+            else _bottomFrontImage.texture = tex;
         }
 
         private void PrivateSetMiddleBackPhoto(Texture2D tex)
@@ -189,7 +248,6 @@ namespace Gallery.PhotoLoop.View
                 _middleBackVideo.targetTexture = _middleBackRT;
                 _middleBackVideo.isLooping = false;
                 _middleBackVideo.playOnAwake = false;
-                
                 _middleBackVideo.Prepare();
             }
             else
@@ -199,38 +257,31 @@ namespace Gallery.PhotoLoop.View
                 _middleFrontVideo.targetTexture = _middleFrontRT;
                 _middleFrontVideo.isLooping = false;
                 _middleFrontVideo.playOnAwake = false;
-                
                 _middleFrontVideo.Prepare();
             }
         }
 
         private void PrivatePlayIfVideo(VideoPlayer vp)
         {
-            if (vp != null && vp.clip != null) 
-                vp.Play();
+            if (vp != null && vp.clip != null) vp.Play();
         }
 
         private void PrivateStopIfVideo(VideoPlayer vp)
         {
-            if (vp != null && vp.isPlaying) 
-                vp.Stop();
+            if (vp != null && vp.isPlaying) vp.Stop();
         }
 
         private void PrivateStopMiddleBackVideo()
         {
             if (_middleFrontActive)
             {
-                if (_middleBackVideo != null && _middleBackVideo.isPlaying) 
-                    _middleBackVideo.Stop();
-                
+                if (_middleBackVideo != null && _middleBackVideo.isPlaying) _middleBackVideo.Stop();
                 _middleBackVideo.clip = null;
                 _middleBackVideo.targetTexture = null;
             }
             else
             {
-                if (_middleFrontVideo != null && _middleFrontVideo.isPlaying) 
-                    _middleFrontVideo.Stop();
-                
+                if (_middleFrontVideo != null && _middleFrontVideo.isPlaying) _middleFrontVideo.Stop();
                 _middleFrontVideo.clip = null;
                 _middleFrontVideo.targetTexture = null;
             }

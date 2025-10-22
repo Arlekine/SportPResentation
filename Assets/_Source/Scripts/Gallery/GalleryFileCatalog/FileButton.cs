@@ -1,5 +1,4 @@
 using System;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,40 +10,59 @@ namespace Gallery.GalleryFileCatalog
         [SerializeField] private RawImage _image;
         [SerializeField] private bool _isVideo;
         
-        [Space]
-        [SerializeField] private CanvasGroup _panel;
-        [SerializeField] private float _fadeDuration = 0.2f;
-        
+        [Space, Header("Animation")] 
+        [SerializeField] private UIShowingAnimation _animation;
+
+        private bool _isActivate;
         private int _index;
-        
+
         public event Action<FileButton> Selected;
         public bool IsVideo => _isVideo;
         public int Index => _index;
+        public bool IsActive => _isActivate;
 
         public void Init(int index, Texture2D texture2D)
         {
             _index = index;
             _image.texture = texture2D;
-            Deactivate();
         }
-        
+
+        public void InitIndex(int index)
+        {
+            _index = index;
+        }
+
+        public void SetPreview(Texture texture)
+        {
+            _image.texture = texture;
+        }
+
         private void OnEnable() =>
             _button.onClick.AddListener(OnButtonClick);
-        
+
         private void OnDisable() =>
             _button.onClick.RemoveListener(OnButtonClick);
-        
+
         private void OnButtonClick()
         {
+            if (IsActive)
+                Deactivate();
+            else
+                Activate();
+
             Selected?.Invoke(this);
-            _panel.DOFade(1f, _fadeDuration);
-            _panel.blocksRaycasts = true;
+        }
+
+        public void Activate()
+        {
+            _animation.Show();
+            _isActivate = true;
         }
 
         public void Deactivate()
         {
-            _panel.DOFade(0f, _fadeDuration);
-            _panel.blocksRaycasts = false;
+            _animation.Hide();
+            _isActivate = false;
         }
     }
 }
