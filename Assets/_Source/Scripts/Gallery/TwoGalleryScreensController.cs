@@ -3,7 +3,6 @@ using Gallery.GalleryFileCatalog;
 using Gallery.GalleryFolderCatalog;
 using Gallery.PhotoLoop.App;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gallery.App
 {
