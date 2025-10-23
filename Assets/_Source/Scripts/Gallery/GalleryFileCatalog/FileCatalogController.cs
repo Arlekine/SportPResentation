@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using Gallery.Data;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Video;
 
 namespace Gallery.GalleryFileCatalog
@@ -13,7 +12,6 @@ namespace Gallery.GalleryFileCatalog
     public class FileCatalogController : MonoBehaviour
     {
         [SerializeField] private List<FileButton> _buttons;
-        [SerializeField] private Button _backButton;
         [SerializeField] private TextMeshProUGUI _title;
 
         [Space, Header("Animation")] 
@@ -25,7 +23,6 @@ namespace Gallery.GalleryFileCatalog
         private readonly List<FileButton> _photoButtons = new List<FileButton>();
 
         public event Action<FileButton> Selected;
-        public event Action Back;
 
         public void Init(MediaSequenceSO sequence)
         {
@@ -65,18 +62,6 @@ namespace Gallery.GalleryFileCatalog
             }
 
             GenerateAllVideoPreviewsSequential().Forget();
-        }
-        
-        private void OnEnable() =>
-            _backButton.onClick.AddListener(OnBack);
-
-        private void OnDisable() =>
-            _backButton.onClick.RemoveListener(OnBack);
-
-        private void OnBack()
-        {
-            Deactivate();
-            Back?.Invoke();
         }
 
         private async UniTaskVoid GenerateAllVideoPreviewsSequential()

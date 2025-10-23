@@ -9,7 +9,6 @@ namespace Gallery.GalleryFolderCatalog
 {
     public class GalleryFolderController : MonoBehaviour
     {
-        [SerializeField] private Button _backButton;
         [SerializeField] private RectTransform _content;
         [SerializeField] private FolderButton _buttonPrefab;
 
@@ -20,7 +19,6 @@ namespace Gallery.GalleryFolderCatalog
         private List<FolderButton> _buttons = new List<FolderButton>();
         
         public event Action<int> Selected;
-        public event Action Back;
 
         [ProButton]
         public void Init(MediaSequenceCollectionSO collection)
@@ -51,24 +49,11 @@ namespace Gallery.GalleryFolderCatalog
         {
             Selected?.Invoke(obj);
         }
-
-        private void OnBack()
-        {
-            Deactivate();
-            Back?.Invoke();
-        }
-
-        private void OnEnable()
-        {
-            _backButton.onClick.AddListener(OnBack);
-        }
         
         private void OnDisable()
         {
             foreach (var folderButton in _buttons)
                 folderButton.Selected -= OnSelected;
-            
-            _backButton.onClick.RemoveListener(OnBack);
         }
     }
 }
