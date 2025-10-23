@@ -14,7 +14,7 @@ namespace Animation
         private Sequence _sequence;
         
         [ProButton]
-        private async UniTask Show()
+        public async UniTask Show()
         {
             _sequence?.Kill();
             _sequence = DOTween.Sequence();
@@ -27,7 +27,7 @@ namespace Animation
         }
         
         [ProButton]
-        private async UniTask Hide()
+        public async UniTask Hide()
         {
             _sequence?.Kill();
             _sequence = DOTween.Sequence();
