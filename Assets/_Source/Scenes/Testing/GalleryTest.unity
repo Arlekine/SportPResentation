@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f38638f5f6428c85a2cd353ec7a4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gallery.App.TwoGalleryScreensController
-  _mediaController: {fileID: 859574591}
+  _mediaController: {fileID: 760315304}
   _folderController: {fileID: 1570921237}
   _fileCatalogController: {fileID: 203371897}
   _collection: {fileID: 11400000, guid: 4804ebcb242b94df4801cd1ee362a3cc, type: 2}
@@ -595,7 +595,6 @@ MonoBehaviour:
   - {fileID: 1916280220}
   - {fileID: 986402231}
   - {fileID: 1355440431}
-  _backButton: {fileID: 0}
   _title: {fileID: 1756526742}
   _animation: {fileID: 203371898}
 --- !u!114 &203371898
@@ -1029,14 +1028,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334372044}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 944574848}
   - {fileID: 2028083428}
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 760315306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1363,14 +1362,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437987644}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 425837706}
   - {fileID: 456668861}
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 760315306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2161,6 +2160,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726606195}
   m_CullTransparentMesh: 1
+--- !u!1 &760315303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760315306}
+  - component: {fileID: 760315305}
+  - component: {fileID: 760315304}
+  m_Layer: 5
+  m_Name: PhotoAndVideo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &760315304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760315303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4b50e390da410cabce2555d0c50b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.App.MediaController
+  _collection: {fileID: 11400000, guid: 4804ebcb242b94df4801cd1ee362a3cc, type: 2}
+  _view: {fileID: 760315305}
+  _useUnscaledTime: 0
+--- !u!114 &760315305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760315303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bc620e22c342dd9cce1fb4786ff016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.View.TripleMediaView
+  _topFrontGroup: {fileID: 425837709}
+  _topBackGroup: {fileID: 456668862}
+  _topFrontImage: {fileID: 425837708}
+  _topBackImage: {fileID: 456668859}
+  _middleFrontGroup: {fileID: 684025748}
+  _middleBackGroup: {fileID: 1082673780}
+  _middleFrontImage: {fileID: 684025747}
+  _middleBackImage: {fileID: 1082673779}
+  _middleFrontVideo: {fileID: 684025746}
+  _middleBackVideo: {fileID: 1082673775}
+  _middleFrontRT: {fileID: 8400000, guid: 116e9d7b51e7a4cc3a67104b394be270, type: 2}
+  _middleBackRT: {fileID: 8400000, guid: 72615133d861b468eb6c7818f19ec4c7, type: 2}
+  _bottomFrontGroup: {fileID: 944574851}
+  _bottomBackGroup: {fileID: 2028083429}
+  _bottomFrontImage: {fileID: 944574850}
+  _bottomBackImage: {fileID: 2028083426}
+  _fadeDurationSeconds: 0.5
+  _middleVideoOnly: 0
+  _title: {fileID: 1028712402}
+  _subtitle: {fileID: 1183129818}
+  _animationSubtitle: {fileID: 1183129817}
+  _animationTitle: {fileID: 1028712405}
+--- !u!224 &760315306
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760315303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 437987645}
+  - {fileID: 2018729217}
+  - {fileID: 334372045}
+  - {fileID: 1028712404}
+  - {fileID: 1183129814}
+  m_Father: {fileID: 859574596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &847576459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,8 +2369,6 @@ GameObject:
   - component: {fileID: 859574595}
   - component: {fileID: 859574594}
   - component: {fileID: 859574593}
-  - component: {fileID: 859574592}
-  - component: {fileID: 859574591}
   m_Layer: 5
   m_Name: PhotoCanvasSecondCamera
   m_TagString: Untagged
@@ -2288,55 +2376,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &859574591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859574590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e4b50e390da410cabce2555d0c50b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.App.MediaController
-  _collection: {fileID: 11400000, guid: 4804ebcb242b94df4801cd1ee362a3cc, type: 2}
-  _view: {fileID: 859574592}
-  _useUnscaledTime: 0
---- !u!114 &859574592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859574590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bc620e22c342dd9cce1fb4786ff016, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhotoLoop.View.TripleMediaView
-  _topFrontGroup: {fileID: 425837709}
-  _topBackGroup: {fileID: 456668862}
-  _topFrontImage: {fileID: 425837708}
-  _topBackImage: {fileID: 456668859}
-  _middleFrontGroup: {fileID: 684025748}
-  _middleBackGroup: {fileID: 1082673780}
-  _middleFrontImage: {fileID: 684025747}
-  _middleBackImage: {fileID: 1082673779}
-  _middleFrontVideo: {fileID: 684025746}
-  _middleBackVideo: {fileID: 1082673775}
-  _middleFrontRT: {fileID: 8400000, guid: 116e9d7b51e7a4cc3a67104b394be270, type: 2}
-  _middleBackRT: {fileID: 8400000, guid: 72615133d861b468eb6c7818f19ec4c7, type: 2}
-  _bottomFrontGroup: {fileID: 944574851}
-  _bottomBackGroup: {fileID: 2028083429}
-  _bottomFrontImage: {fileID: 944574850}
-  _bottomBackImage: {fileID: 2028083426}
-  _fadeDurationSeconds: 0.5
-  _middleVideoOnly: 0
-  _title: {fileID: 1028712402}
-  _subtitle: {fileID: 1183129818}
-  _animationSubtitle: {fileID: 1183129817}
-  _animationTitle: {fileID: 1028712405}
 --- !u!114 &859574593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2413,12 +2452,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2026036259}
-  - {fileID: 437987645}
-  - {fileID: 2018729217}
-  - {fileID: 334372045}
-  - {fileID: 1028712404}
-  - {fileID: 1183129814}
-  - {fileID: 1331361506}
+  - {fileID: 760315306}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2885,12 +2919,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028712401}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 760315306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3173,12 +3207,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183129813}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 760315306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3585,17 +3619,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331361505}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 512, y: 768}
+  m_SizeDelta: {x: 1024, y: 1536}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331361507
 MonoBehaviour:
@@ -4076,7 +4110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b490a0aaa66448ebec5f1790e675e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gallery.GalleryFolderCatalog.GalleryFolderSelection
-  _backButton: {fileID: 0}
   _content: {fileID: 2041636678049315965}
   _buttonPrefab: {fileID: 8379616795034780075, guid: 911bb5d2b0e9d4cd185ef9979de5909f, type: 3}
   _animation: {fileID: 1351843860}
@@ -5501,14 +5534,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018729216}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 684025743}
   - {fileID: 1082673778}
-  m_Father: {fileID: 859574596}
+  m_Father: {fileID: 760315306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6064,6 +6097,7 @@ SceneRoots:
   - {fileID: 543886744}
   - {fileID: 1976901691}
   - {fileID: 859574596}
+  - {fileID: 1331361506}
   - {fileID: 248755751}
   - {fileID: 1395486525}
   - {fileID: 35674557}
