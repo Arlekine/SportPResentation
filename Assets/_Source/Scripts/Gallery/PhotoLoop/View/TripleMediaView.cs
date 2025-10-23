@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -33,6 +34,12 @@ namespace Gallery.PhotoLoop.View
         [SerializeField] private float _fadeDurationSeconds = 0.5f;
         [SerializeField] private bool _middleVideoOnly;
 
+        [Space, Header("Text")] 
+        [SerializeField] private TextMeshProUGUI _title;
+        [SerializeField] private TextMeshProUGUI _subtitle;
+        [SerializeField] private UIShowingAnimation _animationSubtitle;
+        [SerializeField] private UIShowingAnimation _animationTitle;
+
         private bool _topFrontActive = true;
         private bool _middleFrontActive = true;
         private bool _bottomFrontActive = true;
@@ -45,6 +52,12 @@ namespace Gallery.PhotoLoop.View
             PrivateCrossfadeBottom();
         }
 
+        public void SetTitle(string title)
+        {
+            _title.text = title;
+            _subtitle.text = title;
+        }
+        
         public void SwitchNextVideo()
         {
             PrivateCrossfadeMiddle();
@@ -66,6 +79,9 @@ namespace Gallery.PhotoLoop.View
             _topBackGroup.DOFade(0f, _fadeDurationSeconds);
             _bottomFrontGroup.DOFade(0f, _fadeDurationSeconds);
             _bottomBackGroup.DOFade(0f, _fadeDurationSeconds);
+            
+            _animationTitle.Hide();
+            _animationSubtitle.Show();
 
             _topFrontGroup.blocksRaycasts = false;
             _topBackGroup.blocksRaycasts = false;
@@ -93,6 +109,9 @@ namespace Gallery.PhotoLoop.View
 
             topFront.DOFade(1f, _fadeDurationSeconds);
             botFront.DOFade(1f, _fadeDurationSeconds);
+            
+            _animationTitle.Show();
+            _animationSubtitle.Hide();
 
             topFront.blocksRaycasts = true;
             botFront.blocksRaycasts = true;

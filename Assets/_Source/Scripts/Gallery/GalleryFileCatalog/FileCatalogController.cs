@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using com.cyborgAssets.inspectorButtonPro;
 using Cysharp.Threading.Tasks;
 using Gallery.Data;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -13,6 +14,7 @@ namespace Gallery.GalleryFileCatalog
     {
         [SerializeField] private List<FileButton> _buttons;
         [SerializeField] private Button _backButton;
+        [SerializeField] private TextMeshProUGUI _title;
 
         [Space, Header("Animation")] 
         [SerializeField] private UIShowingAnimation _animation;
@@ -32,6 +34,8 @@ namespace Gallery.GalleryFileCatalog
 
             _videoButtons.Clear();
             _photoButtons.Clear();
+            
+            _title.text = _sequence.Title;
 
             if (_thumbnailPlayer == null)
             {

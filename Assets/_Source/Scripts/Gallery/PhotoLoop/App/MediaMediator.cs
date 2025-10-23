@@ -34,6 +34,8 @@ namespace Gallery.PhotoLoop.App
             _photoIndex = 0;
             _videoIndex = 0;
             _initialized = true;
+            
+            _view.SetTitle(_collection.Sequences[index].Title);
 
             PrivateApplyFadeFromSequence();
             PrivateWarmupFirstFrame();
